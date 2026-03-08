@@ -1,0 +1,16 @@
+hosts: agent
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes
+    - name: Install Java
+      apt: name=openjdk-11-jdk state=present
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+    - name: Add Jenkins user to Docker group
+      user:
+        name: jenkins
+        groups: docker
+        append: yes
